@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // https://www.bilibili.com/video/BV1s3411g7gU/?spm_id_from=333.337.search-card.all.click&vd_source=ba4cef6c44c3430b2a8024337b31925b
+
+        var name = 'window name'
+
+        let person = {
+            name: 'zhang yushi'
+        }
+
+        function sayHi(var1, var2) {
+            console.log('Hi, My name is :', this.name);
+            console.log('variable', var1, var2);
+            return {
+                var1, var2
+            }
+        }
+
+        var res = sayHi(1, 2);
+        console.log(res);
+
+        var res = sayHi.apply(person, [1, 2]);
+        console.log(res);
+        // 等价于
+        // person.sayHi()
+
+        Function.prototype.myApply = function (obj, args) {
+            // person.fn = sayHi() 将sayHi的方法赋值给person的一个属性
+            obj = obj || window
+            fn = Symbol()
+            obj[fn] = this;
+            // 执行该方法，传入参数
+            let result = args ? obj[fn](...args) : obj[fn]();
+            delete obj[fn]
+            return result
+        }
+
+        var res = sayHi.myApply(person, [1, 2]);
+        console.log(res);
+    </script>
+</body>
+
+</html>
