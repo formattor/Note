@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- https://leetcode.cn/problems/two-sum/ -->
+    <script>
+        // 输入：nums = [2,7,11,15], target = 9
+        // 输出：[0,1]
+
+        /**
+         * @param {number[]} nums
+         * @param {number} target
+         * @return {number[]}
+         */
+
+        // var twoSum = function (nums, target) {
+        //     let l = nums.length;
+        //     for (let i = 0; i < l; i++) {
+        //         for (let j = i + 1; j < l; j++) {
+        //             if (nums[i] + nums[j] == target) {
+        //                 return [i, j]
+        //             }
+        //         }
+        //     }
+        // };
+
+        function twoSum(nums, target) {
+            let map = new Map()
+            let l = nums.length;
+            for (let i = 0; i < l; i++) {
+                let res = target - nums[i];
+                if (map.has(res)) {
+                    return [map.get(res), i];
+                }
+                map.set(nums[i], i)
+            }
+            return []
+        }
+
+        console.time();
+        console.log(twoSum([2, 7, 11, 15], 9));
+        console.timeEnd();
+        console.log(twoSum([3, 2, 4], 6));
+        console.log(twoSum([3, 3], 6));
+
+        // 需复盘
+        // return [map.get(res),i]
+        // for循环return出去是否会终止
+        // 声明变量好还是不声明好 length
+    </script>
+</body>
+
+</html>
