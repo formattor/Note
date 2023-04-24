@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- https://leetcode.cn/problems/add-two-numbers/ -->
+
+    <script>
+        /**
+        * @param {ListNode} l1
+        * @param {ListNode} l2
+        * @return {ListNode}
+        */
+        var addTwoNumbers = function (l1, l2) {
+            let res = l1;
+            let i1 = Array.from(l1)[Symbol.iterator]()
+            let i2 = Array.from(l2)[Symbol.iterator]()
+            let jin = 0;
+            res = null;
+            let l = l1.length >= l2.length ? l1.length : l2.length;
+            for (let i = 0; i < l; i++) {
+                let v1 = i1.next().value ?? 0;
+                let v2 = i2.next().value ?? 0;
+                if (v1 + v2 + jin < 10) {
+                    res.push(v1 + v2 + jin)
+                    jin = 0;
+                } else {
+                    res.push((v1 + v2 + jin) % 10);
+                    jin = 0;
+                    jin += 1;
+                }
+            }
+            if (jin) {
+                res.push(jin)
+            }
+
+            return res;
+        };
+
+        let l1 = [2, 4, 3], l2 = [5, 6, 4];
+        // let l1 = [9, 9, 9, 9, 9, 9, 9], l2 = [9, 9, 9, 9]
+        console.log(addTwoNumbers(l1, l2));
+
+        // LeetCode未解决
+        // 参数和返回值需要NodeList类型
+    </script>
+
+</body>
+
+</html>
