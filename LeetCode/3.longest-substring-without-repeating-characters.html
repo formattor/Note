@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // let s = "abcabcbb";
+        // let s = "pwwkew"
+        // let s = "bbbbb"
+        // let s = ""
+        // let s = " "
+        let s = "cdd"
+        /**
+         * @param {string} s
+         * @return {number}
+         */
+        var lengthOfLongestSubstring = function (s) {
+            let sub = "";
+            let max = 0;
+            for (let i = 0; i < s.length; i++) {
+                // if no repeat
+                if (!sub.includes(s[i])) {
+                    sub += s[i]
+                } else {
+                    max = max > sub.length ? max : sub.length;
+                    sub = sub.slice(sub.indexOf(s[i]) + 1) + s[i];
+                }
+            }
+            if (sub.length > max) {
+                max = sub.length;
+            }
+            return max;
+        };
+
+        console.log(lengthOfLongestSubstring(s));
+    </script>
+</body>
+
+</html>
