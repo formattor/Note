@@ -4,5 +4,5 @@
 
 2. HTML保存不刷新
 
-1. map?
-2. 不要在html页面仅仅写一个script
+map?
+不要在html页面仅仅写一个script
