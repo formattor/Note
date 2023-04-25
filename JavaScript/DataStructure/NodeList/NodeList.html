@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script></script>
+    <!-- https://blog.csdn.net/weixin_46224014/article/details/121178538 -->
+    <script>
+
+        class Node {
+            constructor(val) {
+                this.val = val;
+                this.head = null;
+            }
+        }
+
+        class NodeList {
+            constructor() {
+                this.length = 0;
+                this.head = null;
+            }
+            // add
+            add(val) {
+                let node = new Node(val);
+                if (this.head === null) {
+                    this.head = node;
+                } else {
+                    let current = this.head;
+                    while (current.next) {
+                        current = current.next;
+                    }
+                    current.next = node;
+                }
+                this.length++;
+            }
+            // insert
+            insert(index, val) {
+                if (index > -1 && index < this.length) {
+                    let node = new Node(val);
+                    let preNode;
+                    let position = 0;
+                    let current = this.head;
+                    if (index === 0) {
+                        node.next = current;
+                        this.head = node;
+                    } else {
+                        while (position++ < index) {
+                            preNode = current;
+                            current = current.next;
+                        }
+                        node.next = current;
+                        preNode.next = node;
+                    }
+                    this.length++;
+                } else {
+                    return false
+                }
+            }
+            // remove
+            remove(index) {
+                if (index > -1 && index < this.length) {
+                    let preNode;
+                    let position = 0;
+                    let current = this.head;
+                    if (index === 0) {
+                        this.head = current.next;
+                    } else {
+                        while (position++ < index) {
+                            preNode = current;
+                            current = current.next;
+                        }
+                        preNode.next = current.next;
+                    }
+                    this.length--;
+                    return current.val;
+                } else {
+                    return null
+                }
+            }
+            // indexOf
+            indexOf(val) {
+                let current = this.head;
+                let position = 0;
+                while (current) {
+                    if (current.val === val) {
+                        return position;
+                    }
+                    position++;
+                    current = current.next;
+                }
+                return -1
+            }
+            // size
+            size() {
+                return this.length;
+            }
+            // toString
+            toString() {
+                let current = this.head;
+                let str = "";
+                while (current) {
+                    str += current.val + ((current.next ? ',' : ''));
+                    // str += current.val;
+                    current = current.next;
+                }
+                return str;
+            }
+            // isEmpty
+            isEmpty() {
+                return this.length === 0;
+            }
+        }
+        let linkNode = new NodeList();
+        linkNode.add(1)
+        linkNode.add(2)
+        linkNode.add(3)
+        linkNode.insert(2, 5)
+        // console.log(linkNode);
+        // let a = linkNode.remove(2)
+        // console.log(a, linkNode);
+        // console.log(linkNode.indexOf(1));
+        console.log(linkNode.toString());
+    </script>
+</body>
+
+</html>
