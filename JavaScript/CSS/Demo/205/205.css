@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #111;
+}
+
+.container {
+    color: #fff;
+    font-size: 80px;
+    text-transform: uppercase;
+    font-weight: bolder;
+    position: relative;
+}
+
+.container::before {
+    content: 'hello world';
+    /* 子绝父相 */
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #eeea06;
+    width: 60px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 5px solid #eeea06;
+    animation: move 4s linear infinite;
+    filter: drop-shadow(0 0 50px #eeea06);
+}
+
+@keyframes move {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
