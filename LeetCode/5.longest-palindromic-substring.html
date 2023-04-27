@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 未完成
+
+        // 输入：s = "babad"
+        // 输出："bab"
+        // 解释："aba" 同样是符合题意的答案。
+        // 输入：s = "cbbd"
+        // 输出："bb"
+
+        /**
+         * @param {string} s
+         * @return {string}
+         */
+
+        // var longestPalindrome = function (s) {
+        //     let str = []
+        //     for (let i = 0; i < s.length; i++) {
+        //         let lastIndex = s.lastIndexOf(s[i])
+        //         let firstIndex = i;
+        //         let temp = s.substring(firstIndex, lastIndex + 1)
+        //         if (lastIndex !== i) {
+        //             for (let j = 0; j < lastIndex - firstIndex; j++) {
+        //                 firstIndex++;
+        //                 lastIndex--;
+        //                 if (s[firstIndex] !== s[lastIndex]) {
+        //                     break;
+        //                 }
+        //                 if (lastIndex - firstIndex == 0 || lastIndex - firstIndex == 1) {
+        //                     str.push(temp);
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     return str;
+        // };
+
+        var longestPalindrome = function (s) {
+            let str = new Set();
+            for (let i = 0; i < s.length; i++) {
+                let lastIndex = s.lastIndexOf(s[i])
+                let tempStr = s.slice(i, lastIndex + 1);
+                let firstIndex = i;
+                while (lastIndex !== firstIndex && lastIndex >= 0) {
+                    if (tempStr.split('').reverse().join('') === tempStr) {
+                        str.add(tempStr);
+                    }
+                    tempStr = tempStr.slice(0, tempStr.length - 1);
+                    lastIndex = tempStr.lastIndexOf(s[i]);
+                    tempStr = tempStr.slice(0, lastIndex + 1);
+                }
+            }
+            console.log(str);
+            let maxStr = "";
+            for (const i of str) {
+                maxStr = i.length > maxStr.length ? i : maxStr;
+            }
+            if (!maxStr) {
+                maxStr = s.charAt(0);
+            }
+            return maxStr;
+        };
+
+        var judgeReverse = function (s) {
+            return s.split('').reverse().join('') === s;
+        }
+
+        // s = "abac" //aba
+        // s = "abacassa" //assa
+        // s = "abaca" //aba
+        // s = "abacas" //aba
+        // s = "aaaa" //aaaa
+        // s = "babad" //bab
+        // s = "a"; //a
+        // s = "ac" //a
+        // s = "aacabdkacaa"; //aca
+        s = "abcdbbfcba" //bb
+
+        console.log(longestPalindrome(s));
+
+        // console.log(judgeReverse(s));
+    </script>
+
+    <script>
+        /**
+         * @param {string} s
+         * @return {string}
+         */
+        /*
+       使用Manacher算法来解决这个问题。Manacher算法是一种用于查找最长回文子串的线性时间复杂度算法。
+       核心思想是，利用回文串的对称性来减少重复计算。具体来说，我们维护一个中心点center和一个半径radius，
+       其中center表示当前回文串的中心位置，radius表示当前回文串的半径长度。
+       我们从左到右遍历字符串，对于每个位置i，我们分别向左和向右扩展，直到找到不是回文串为止。
+       这个过程中，我们需要注意两个问题：
+       1. 如果当前位置i在当前回文串的右边界之外，那么我们需要重新计算中心点和半径长度。
+       具体来说，我们将center设置为i，将radius设置为1，然后继续向左和向右扩展，直到找到不是回文串为止。
+       
+       2.如果当前位置i在当前回文串的右边界之内，那么我们可以利用回文串的对称性来减少重复计算。
+       具体来说，我们找到当前回文串的对称点j，然后利用j的回文半径来更新i的回文半径。
+       具体来说，我们将i的回文半径设置为min(radius - (i - center), p[2 * j - i])，
+       然后继续向左和向右扩展，直到找到不是回文串为止。
+        */
+        var longestPalindrome = function (s) {
+            let n = s.length;
+            let t = '#';
+            for (let i = 0; i < n; i++) {
+                t += s[i] + '#';
+            }
+            let p = new Array(t.length).fill(0);
+            let mx = 0, id = 0, resLen = 0, resCenter = 0;
+            for (let i = 0; i < t.length; i++) {
+                p[i] = mx > i ? Math.min(p[2 * id - i], mx - i) : 1;
+                while (i + p[i] < t.length && i - p[i] >= 0 && t[i + p[i]] === t[i - p[i]]) {
+                    p[i]++;
+                }
+                if (mx < i + p[i]) {
+                    mx = i + p[i];
+                    id = i;
+                }
+                if (resLen < p[i]) {
+                    resLen = p[i];
+                    resCenter = i;
+                }
+            }
+            return s.substring((resCenter - resLen + 1) / 2, (resCenter + resLen - 1) / 2);
+        };
+    </script>
+</body>
+
+</html>
