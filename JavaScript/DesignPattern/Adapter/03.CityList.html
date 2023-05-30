@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var getGuangdongCity = function () {
+            var guangdongCity = [
+                { name: 'shenzhen', id: 11 },
+                { name: 'zhuhai', id: 12 },
+            ]
+            return guangdongCity;
+        }
+
+        // new data structure
+        var guangdongCity = {
+            shenzhen: 11,
+            guangzhou: 12,
+            zhuhai: 13
+        }
+
+        // adapter
+        var addressAdapter = function (oldAddressFn) {
+            var address = {}, oldAddress = oldAddressFn();
+            for (var i = 0, c; c = oldAddress[i++];) {
+                address[c.name] = c.id
+            }
+            return function () {
+                return address
+            }
+        }
+
+        var render = function (fn) {
+            console.log('rendering');
+            document.write(JSON.stringify(fn()))
+        }
+
+        // render(getGuangdongCity)
+        render(addressAdapter(getGuangdongCity))
+    </script>
+</body>
+
+</html>
